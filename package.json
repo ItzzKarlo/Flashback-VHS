@@ -1,0 +1,10 @@
+{
+  "name": "flashbackvhs",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "echo Use scripts/dev.bat on Windows",
+    "web": "npm --prefix apps/web run dev",
+    "api": "cd apps/api && python main.py"
+  }
+}

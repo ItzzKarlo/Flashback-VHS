@@ -1,0 +1,11 @@
+{
+  "users": [
+    {
+      "user_id": "user_6546884487f84ea688aac6396edef7d8",
+      "username": "karlo.cavlovic",
+      "email": "karlo.cavlovic@outlook.com",
+      "password_hash": "pbkdf2_sha256$fNfHH9vmy8u881W9NKiZ+w==$hXV7qOeR9Ef7PJmwcgQLnMbwtfOt1YkLlsud4smzwnw=",
+      "created_at": "2026-06-26T17:45:28.856915+00:00"
+    }
+  ]
+}
