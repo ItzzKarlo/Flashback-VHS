@@ -1,5 +1,6 @@
 import '../styles/global.css';
 import Navbar from '../components/Navbar';
+import MaintenanceGate from '../components/MaintenanceGate';
 
 export const metadata = {
   title: 'FlashbackVHS',
@@ -40,7 +41,7 @@ try {
       <body>
         <div className="scanline-overlay" />
         <Navbar />
-        <main>{children}</main>
+        <MaintenanceGate>{children}</MaintenanceGate>
         <footer className="site-footer">
           <span>© 2026 Karlo Cavlovic. FlashbackVHS.</span>
           <nav aria-label="Footer links">

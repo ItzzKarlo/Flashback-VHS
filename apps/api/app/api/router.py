@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.api.routes import admin, artworks, auth, health, presets, preview, render, stats, upload
+from app.api.routes import admin, artworks, auth, health, maintenance, presets, preview, render, stats, upload
 
 
 api_router = APIRouter()
@@ -9,6 +9,12 @@ api_router.include_router(
     health.router,
     prefix="/health",
     tags=["Health"],
+)
+
+api_router.include_router(
+    maintenance.router,
+    prefix="/maintenance",
+    tags=["Maintenance"],
 )
 
 api_router.include_router(

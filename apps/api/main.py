@@ -1,6 +1,7 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 
@@ -8,6 +9,7 @@ from app.api.router import api_router
 from app.core.config import get_settings
 from app.core.paths import ensure_storage_dirs
 from app.db.database import init_db
+from app.services.maintenance_service import get_maintenance_status
 from app.utils.cleanup import cleanup_old_temporary_files
 
 
@@ -41,6 +43,32 @@ app.add_middleware(
     TrustedHostMiddleware,
     allowed_hosts=settings.allowed_hosts,
 )
+
+
+@app.middleware("http")
+async def maintenance_guard(request, call_next):
+    status = get_maintenance_status()
+    path = request.url.path
+    allowed_prefixes = (
+        "/api/health",
+        "/api/maintenance",
+        "/api/auth",
+        "/api/admin",
+    )
+
+    if status["enabled"] and path.startswith("/api") and not path.startswith(allowed_prefixes):
+        return JSONResponse(
+            status_code=503,
+            content={
+                "detail": {
+                    "message": status["message"],
+                    "maintenance": True,
+                }
+            },
+        )
+
+    return await call_next(request)
+
 
 app.include_router(api_router, prefix="/api")
 

@@ -37,6 +37,10 @@ def get_upload_dir() -> Path:
     return ensure_dir(resolve_project_path(get_settings().UPLOAD_DIR))
 
 
+def get_storage_dir() -> Path:
+    return ensure_dir(resolve_project_path(get_settings().STORAGE_ROOT))
+
+
 def get_render_dir() -> Path:
     return ensure_dir(resolve_project_path(get_settings().RENDER_DIR))
 

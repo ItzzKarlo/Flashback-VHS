@@ -6,8 +6,8 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     APP_NAME: str = "FlashbackVHS API"
-    APP_ENV: str = "development"
-    APP_DEBUG: bool = True
+    APP_ENV: str = "production"
+    APP_DEBUG: bool = False
 
     FRONTEND_URL: str = "http://localhost:3000"
     CORS_ORIGINS: str = "http://localhost:3000"
@@ -32,6 +32,8 @@ class Settings(BaseSettings):
     DATABASE_URL: str = "postgresql+psycopg://flashbackvhs:flashbackvhs@localhost:5432/flashbackvhs"
     ADMIN_SETUP_KEY: str = ""
     CLEANUP_MAX_AGE_HOURS: int = 24
+    MAINTENANCE_MODE: bool = False
+    MAINTENANCE_MESSAGE: str = "FlashbackVHS is briefly offline for maintenance."
 
     ENABLE_GPU: bool = False
     GPU_ENCODER: str = "h264_nvenc"

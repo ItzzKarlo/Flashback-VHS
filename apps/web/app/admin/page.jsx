@@ -8,6 +8,10 @@ import { apiFetch } from '../../lib/api';
 export default function AdminPage() {
   const [summary, setSummary] = useState(null);
   const [message, setMessage] = useState('');
+  const [maintenanceForm, setMaintenanceForm] = useState({
+    enabled: false,
+    message: 'FlashbackVHS is briefly offline for maintenance.',
+  });
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
 
@@ -18,6 +22,7 @@ export default function AdminPage() {
     try {
       const data = await apiFetch('/api/admin/summary', { auth: true });
       setSummary(data);
+      if (data.maintenance) setMaintenanceForm(data.maintenance);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -36,6 +41,28 @@ export default function AdminPage() {
         auth: true,
       });
       setMessage(`Cleanup removed ${data.total_removed} old files.`);
+      loadAdmin();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function saveMaintenance(event) {
+    event.preventDefault();
+    setBusy(true);
+    setError('');
+    setMessage('');
+
+    try {
+      const data = await apiFetch('/api/admin/maintenance', {
+        method: 'POST',
+        auth: true,
+        body: JSON.stringify(maintenanceForm),
+      });
+      setMaintenanceForm(data);
+      setMessage(data.enabled ? 'Maintenance mode is on.' : 'Maintenance mode is off.');
       loadAdmin();
     } catch (err) {
       setError(err.message);
@@ -80,6 +107,34 @@ export default function AdminPage() {
       {error && <div className="alert error"><pre>{error}</pre></div>}
       {message && <div className="alert status">{message}</div>}
 
+      <section className="panel">
+        <form className="account-form" onSubmit={saveMaintenance}>
+          <div className="section-heading with-action">
+            <div className="section-title-inline">
+              <span>01</span>
+              <h2>Maintenance mode</h2>
+            </div>
+            <label className="checkbox-label compact">
+              <input
+                type="checkbox"
+                checked={maintenanceForm.enabled}
+                onChange={(event) => setMaintenanceForm((current) => ({ ...current, enabled: event.target.checked }))}
+              />
+              Enabled
+            </label>
+          </div>
+          <label>
+            Message
+            <input
+              value={maintenanceForm.message}
+              onChange={(event) => setMaintenanceForm((current) => ({ ...current, message: event.target.value }))}
+              maxLength="240"
+            />
+          </label>
+          <button className="secondary-button" disabled={busy}>Save maintenance state</button>
+        </form>
+      </section>
+
       <section className="stats-grid">
         <article className="stat-card">
           <small>Generated all time</small>
@@ -101,7 +156,7 @@ export default function AdminPage() {
 
       <section className="panel">
         <div className="section-heading">
-          <span>01</span>
+          <span>02</span>
           <h2>Users</h2>
         </div>
         <div className="admin-table">
