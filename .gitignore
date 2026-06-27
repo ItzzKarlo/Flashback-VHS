@@ -1,0 +1,204 @@
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+# FlashbackVHS
+# Global .gitignore
+#
+# Ignores:
+# - Operating system files
+# - IDE/editor settings
+# - Python & Node build artifacts
+# - Secrets
+# - Generated media
+# - Temporary render/cache files
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+
+
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+# Operating System
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+
+.DS_Store
+Thumbs.db
+desktop.ini
+
+
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+# Editors / IDEs
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+
+.vscode/
+.idea/
+
+# Vim
+*.swp
+*.swo
+
+
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+# Environment Variables & Secrets
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+
+# Never commit secrets
+.env
+.env.*
+
+# Example environment files SHOULD be tracked
+!.env.example
+!.env.local.example
+
+
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+# Python
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+
+# Bytecode
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Python runtime
+.Python
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Build / package cache
+pip-wheel-metadata/
+
+# Testing / linting cache
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Coverage
+.coverage
+htmlcov/
+
+
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+# FastAPI / Local Databases
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+
+*.db
+*.sqlite
+*.sqlite3
+
+
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+# Node.js / Next.js
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+
+# Dependencies
+node_modules/
+
+# Framework output
+.next/
+out/
+dist/
+build/
+
+# Package manager logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+# User Uploads & Render Cache
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+
+# Generated user files should never be committed
+storage/uploads/*
+storage/renders/*
+storage/previews/*
+storage/temp/*
+
+# Keep folder structure in Git
+!storage/uploads/.gitkeep
+!storage/renders/.gitkeep
+!storage/previews/.gitkeep
+!storage/temp/.gitkeep
+
+
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+# Generated Images & Videos
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+
+# Rendered output
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+
+# Images
+*.gif
+*.jpg
+*.jpeg
+*.png
+*.webp
+*.tiff
+*.bmp
+
+
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+# Allow Documentation & Website Assets
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+
+# Documentation images
+!docs/**/*.png
+!docs/**/*.jpg
+!docs/**/*.jpeg
+!docs/**/*.gif
+
+# Public website assets
+!apps/web/public/**/*.png
+!apps/web/public/**/*.jpg
+!apps/web/public/**/*.jpeg
+!apps/web/public/**/*.gif
+!apps/web/public/**/*.svg
+!apps/web/public/**/*.webp
+
+
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+# Logs
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+
+logs/
+*.log
+
+
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+# Docker
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+
+# Local Docker volumes
+docker-data/
+
+
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+# Temporary Render Files
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+
+*.tmp
+*.temp
+*.part
+
+
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+# Coverage & Reports
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+
+coverage/
+reports/
+
+
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+# Python Build Artifacts
+# ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+
+*.spec

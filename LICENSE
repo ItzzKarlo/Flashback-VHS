@@ -1,0 +1,58 @@
+FlashbackVHS Attribution License 1.0
+
+Copyright (c) 2026 Karlo Cavlovic
+
+Permission is granted to any person obtaining a copy of this software and
+associated documentation files (the "Software") to use, copy, install, run,
+study, modify, and distribute copies of the Software, subject to the following
+conditions:
+
+1. Attribution Required
+
+   Any public copy, fork, derivative work, hosted version, redistributed
+   version, or commercially used version of the Software must preserve clear
+   attribution to the original project and author.
+
+   Attribution must include:
+
+   - The project name: FlashbackVHS
+   - The author name: Karlo Cavlovic
+   - A link to the original repository when practical:
+     https://github.com/ItzzKarlo/Flashback-VHS
+
+   Attribution must appear in at least one reasonably visible location, such
+   as an application footer, header, about page, README, documentation, package
+   metadata, source file header, or credits page.
+
+2. No False Ownership
+
+   You may not remove attribution and present the Software, or a substantially
+   similar derivative of it, as solely your own original work.
+
+3. Commercial Use
+
+   Commercial use, paid hosting, paid distribution, client work, and derivative
+   products are permitted only when the attribution requirements above are met.
+
+4. Modifications
+
+   You may modify the Software. Modified versions must not misrepresent the
+   origin of the original Software. If you distribute a modified version, you
+   must make clear that it is based on or derived from FlashbackVHS.
+
+5. Included Third-Party Software
+
+   This license applies only to the FlashbackVHS project files authored for
+   this project. Third-party dependencies, frameworks, fonts, binaries,
+   libraries, and tools remain under their own respective licenses.
+
+6. Warranty Disclaimer
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING
+   FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+   DEALINGS IN THE SOFTWARE.
+

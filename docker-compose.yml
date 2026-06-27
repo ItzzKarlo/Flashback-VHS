@@ -1,0 +1,71 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: flashbackvhs
+      POSTGRES_USER: flashbackvhs
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U flashbackvhs -d flashbackvhs"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: ./apps/api
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      APP_ENV: production
+      APP_DEBUG: "false"
+      FRONTEND_URL: ${FRONTEND_URL:-https://flashback-vhs.karlo-cavlovic.dev}
+      CORS_ORIGINS: ${CORS_ORIGINS:-https://flashback-vhs.karlo-cavlovic.dev,https://tools.karlo-cavlovic.dev}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS:-localhost,127.0.0.1,192.168.178.180,flashback-vhs.karlo-cavlovic.dev,tools.karlo-cavlovic.dev}
+      DATABASE_URL: postgresql+psycopg://flashbackvhs:${POSTGRES_PASSWORD:-change-me}@postgres:5432/flashbackvhs
+      STORAGE_ROOT: /data/storage
+      UPLOAD_DIR: /data/storage/uploads
+      RENDER_DIR: /data/storage/renders
+      PREVIEW_DIR: /data/storage/previews
+      TEMP_DIR: /data/storage/temp
+      USER_DIR: /data/storage/users
+      ARTWORK_DIR: /data/storage/artworks
+      FFMPEG_PATH: ffmpeg
+      FFPROBE_PATH: ffprobe
+      FFMPEG_FONT_FILE: /usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf
+      MAX_UPLOAD_MB: ${MAX_UPLOAD_MB:-1024}
+    volumes:
+      - ./storage:/data/storage
+    ports:
+      - "192.168.178.180:8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  web:
+    build:
+      context: ./apps/web
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-https://flashback-vhs.karlo-cavlovic.dev}
+        NEXT_PUBLIC_BASE_PATH: ${NEXT_PUBLIC_BASE_PATH:-}
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_started
+    environment:
+      NODE_ENV: production
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-https://flashback-vhs.karlo-cavlovic.dev}
+      NEXT_PUBLIC_BASE_PATH: ${NEXT_PUBLIC_BASE_PATH:-}
+    ports:
+      - "192.168.178.180:3000:3000"
+
+volumes:
+  postgres_data:
+  app_storage:
