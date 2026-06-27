@@ -16,6 +16,8 @@ export default function Navbar() {
         <nav className="nav-links">
           <Link href="/upload">Create</Link>
           <Link href="/gallery">Gallery</Link>
+          <Link href="/stats">Stats</Link>
+          <Link href="/admin">Admin</Link>
           <Link href="/account">Account</Link>
           <Link href="/login">Login</Link>
         </nav>

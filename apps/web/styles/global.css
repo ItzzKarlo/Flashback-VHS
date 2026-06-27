@@ -846,6 +846,13 @@ select:focus {
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
+.shortcut-hint {
+  display: block;
+  margin-top: 0.4rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
 .alert pre {
   margin: 0;
   white-space: pre-wrap;
@@ -1296,12 +1303,111 @@ input[type="range"] {
   gap: 0.5rem;
 }
 
+.settings-grid,
+.stats-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.settings-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+}
+
+.stats-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.account-form {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.danger-zone {
+  border-color: rgba(251, 113, 133, 0.38);
+}
+
+.danger-zone .secondary-button {
+  color: var(--danger);
+  border-color: rgba(251, 113, 133, 0.5);
+}
+
+.stat-card {
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: var(--card);
+}
+
+.stat-card small {
+  display: block;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.stat-card strong {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--text);
+  font-size: clamp(1.45rem, 3vw, 2.35rem);
+  line-height: 1;
+}
+
+.stat-list {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.stat-list div,
+.admin-table-row {
+  display: grid;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.85rem;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.stat-list div {
+  grid-template-columns: 1fr auto;
+}
+
+.stat-list span,
+.admin-table-row span {
+  color: var(--muted);
+}
+
+.admin-table {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.admin-table-row {
+  grid-template-columns: 1fr 1.4fr 0.7fr 0.8fr;
+  min-width: 0;
+}
+
+.admin-table-row > * {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.admin-table-row.is-heading {
+  color: var(--purple-light);
+  background: rgba(124, 58, 237, 0.1);
+}
+
 @media (max-width: 620px) {
   .segmented-grid,
   .toggle-grid,
   .action-row,
   .compare-row,
-  .render-detail-grid {
+  .render-detail-grid,
+  .settings-grid,
+  .stats-grid,
+  .admin-table-row {
     grid-template-columns: 1fr;
   }
 }
@@ -1322,5 +1428,22 @@ input[type="range"] {
 
   .account-heading {
     flex-direction: column;
+  }
+
+  .settings-grid,
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .admin-table-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .settings-grid,
+  .stats-grid,
+  .admin-table-row {
+    grid-template-columns: 1fr;
   }
 }

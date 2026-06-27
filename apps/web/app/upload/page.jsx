@@ -421,6 +421,37 @@ export default function UploadPage() {
     }
   }
 
+  useEffect(() => {
+    function handleShortcut(event) {
+      const tagName = event.target?.tagName?.toLowerCase();
+      const isTyping = ['input', 'textarea', 'select'].includes(tagName);
+      if (isTyping || busy) return;
+
+      if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+        event.preventDefault();
+        renderVHS();
+      }
+
+      if (event.key.toLowerCase() === 'p') {
+        event.preventDefault();
+        previewFrame();
+      }
+
+      if (event.key.toLowerCase() === 'u') {
+        event.preventDefault();
+        uploadSelectedFile();
+      }
+
+      if (event.key === 'Escape') {
+        setError('');
+        setStatus('');
+      }
+    }
+
+    window.addEventListener('keydown', handleShortcut);
+    return () => window.removeEventListener('keydown', handleShortcut);
+  }, [file, uploaded, busy, config, selectedPreset]);
+
   return (
     <section className="workspace-shell">
       <div className="page-heading">
@@ -428,6 +459,7 @@ export default function UploadPage() {
         <h1>Build your VHS render</h1>
         <p>Upload media, choose a tape preset, configure the overlay, then render.</p>
         <small className="api-debug">Frontend API target: {API_URL}</small>
+        <small className="shortcut-hint">Shortcuts: Ctrl/⌘+Enter render · P preview · U upload · Esc clear messages</small>
       </div>
 
       {error && <div className="alert error"><pre>{error}</pre></div>}

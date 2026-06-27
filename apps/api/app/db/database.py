@@ -1,6 +1,6 @@
 from collections.abc import Generator
 
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, inspect, text
 from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
 
 from app.core.config import get_settings
@@ -39,3 +39,12 @@ def init_db() -> None:
     from app.models import artwork, user  # noqa: F401
 
     Base.metadata.create_all(bind=engine)
+
+    inspector = inspect(engine)
+    user_columns = {column["name"] for column in inspector.get_columns("users")}
+    if "is_admin" not in user_columns:
+        default_value = "false" if not settings.DATABASE_URL.startswith("sqlite") else "0"
+        with engine.begin() as connection:
+            connection.execute(
+                text(f"ALTER TABLE users ADD COLUMN is_admin BOOLEAN NOT NULL DEFAULT {default_value}")
+            )

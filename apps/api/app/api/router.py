@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.api.routes import artworks, auth, health, presets, preview, render, upload
+from app.api.routes import admin, artworks, auth, health, presets, preview, render, stats, upload
 
 
 api_router = APIRouter()
@@ -15,6 +15,18 @@ api_router.include_router(
     auth.router,
     prefix="/auth",
     tags=["Auth"],
+)
+
+api_router.include_router(
+    admin.router,
+    prefix="/admin",
+    tags=["Admin"],
+)
+
+api_router.include_router(
+    stats.router,
+    prefix="/stats",
+    tags=["Stats"],
 )
 
 api_router.include_router(

@@ -39,6 +39,8 @@ services:
       FFPROBE_PATH: ffprobe
       FFMPEG_FONT_FILE: /usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf
       MAX_UPLOAD_MB: ${MAX_UPLOAD_MB:-1024}
+      ADMIN_SETUP_KEY: ${ADMIN_SETUP_KEY:-change-this-one-time-admin-key}
+      CLEANUP_MAX_AGE_HOURS: ${CLEANUP_MAX_AGE_HOURS:-24}
     volumes:
       - ./storage:/data/storage
     ports:

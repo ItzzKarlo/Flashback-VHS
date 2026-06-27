@@ -73,6 +73,9 @@ export default function LoginPage() {
         <small className="muted">
           New here? <Link href="/register">Create an account</Link>
         </small>
+        <small className="muted">
+          Forgot password? <Link href="/forgot-password">Reset it</Link>
+        </small>
       </form>
     </section>
   );

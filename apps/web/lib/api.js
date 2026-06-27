@@ -58,7 +58,10 @@ function formatApiError(data, fallbackStatus) {
   if (typeof detail === 'string') return detail;
 
   if (Array.isArray(detail)) {
-    return detail.map((item) => item.msg || JSON.stringify(item)).join('\n');
+    return detail.map((item) => {
+      const field = Array.isArray(item.loc) ? item.loc.filter((part) => part !== 'body').join('.') : '';
+      return field ? `${field}: ${item.msg}` : item.msg || JSON.stringify(item);
+    }).join('\n');
   }
 
   if (detail?.message && detail?.error) {
@@ -70,7 +73,8 @@ function formatApiError(data, fallbackStatus) {
   if (data?.message) return data.message;
   if (typeof data === 'string' && data.trim()) return data;
 
-  return `Request failed with ${fallbackStatus}`;
+  const statusLabel = fallbackStatus ? `HTTP ${fallbackStatus}` : 'network error';
+  return `Request failed (${statusLabel}). Please try again.`;
 }
 
 export async function apiFetch(path, options = {}) {

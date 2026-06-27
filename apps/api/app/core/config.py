@@ -30,6 +30,8 @@ class Settings(BaseSettings):
     MAX_UPLOAD_MB: int = 500
 
     DATABASE_URL: str = "postgresql+psycopg://flashbackvhs:flashbackvhs@localhost:5432/flashbackvhs"
+    ADMIN_SETUP_KEY: str = ""
+    CLEANUP_MAX_AGE_HOURS: int = 24
 
     ENABLE_GPU: bool = False
     GPU_ENCODER: str = "h264_nvenc"

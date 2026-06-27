@@ -8,6 +8,7 @@ from app.api.router import api_router
 from app.core.config import get_settings
 from app.core.paths import ensure_storage_dirs
 from app.db.database import init_db
+from app.utils.cleanup import cleanup_old_temporary_files
 
 
 settings = get_settings()
@@ -17,6 +18,7 @@ settings = get_settings()
 async def lifespan(app: FastAPI):
     ensure_storage_dirs()
     init_db()
+    cleanup_old_temporary_files()
     yield
 
 

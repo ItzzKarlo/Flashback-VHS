@@ -12,6 +12,9 @@ export default function AccountPage() {
   const [artworks, setArtworks] = useState([]);
   const [status, setStatus] = useState('Loading account...');
   const [error, setError] = useState('');
+  const [passwordForm, setPasswordForm] = useState({ current_password: '', new_password: '' });
+  const [deletePassword, setDeletePassword] = useState('');
+  const [accountMessage, setAccountMessage] = useState('');
 
   async function loadAccount() {
     setError('');
@@ -42,6 +45,49 @@ export default function AccountPage() {
         auth: true,
       });
       setArtworks((current) => current.filter((item) => item.artwork_id !== artworkId));
+    } catch (err) {
+      setError(err.message);
+    }
+  }
+
+  async function changePassword(event) {
+    event.preventDefault();
+    setError('');
+    setAccountMessage('');
+
+    try {
+      const data = await apiFetch('/api/auth/change-password', {
+        method: 'POST',
+        auth: true,
+        body: JSON.stringify(passwordForm),
+      });
+      setAccountMessage(data.message || 'Password changed.');
+      setPasswordForm({ current_password: '', new_password: '' });
+      clearAuthSession();
+      setTimeout(() => router.push('/login'), 900);
+    } catch (err) {
+      setError(err.message);
+    }
+  }
+
+  async function deleteAccount(event) {
+    event.preventDefault();
+    setError('');
+    setAccountMessage('');
+
+    if (!window.confirm('Delete this account and saved works? This cannot be undone.')) {
+      return;
+    }
+
+    try {
+      const data = await apiFetch('/api/auth/me', {
+        method: 'DELETE',
+        auth: true,
+        body: JSON.stringify({ password: deletePassword }),
+      });
+      setAccountMessage(data.message || 'Account deleted.');
+      clearAuthSession();
+      setTimeout(() => router.push('/'), 700);
     } catch (err) {
       setError(err.message);
     }
@@ -80,6 +126,7 @@ export default function AccountPage() {
 
       {error && <div className="alert error"><pre>{error}</pre></div>}
       {status && <div className="alert status">{status}</div>}
+      {accountMessage && <div className="alert status">{accountMessage}</div>}
 
       <section className="panel">
         <div className="section-heading with-action">
@@ -115,6 +162,53 @@ export default function AccountPage() {
             ))}
           </div>
         )}
+      </section>
+
+      <section className="settings-grid">
+        <form className="panel account-form" onSubmit={changePassword}>
+          <div className="section-heading">
+            <span>02</span>
+            <h2>Change password</h2>
+          </div>
+          <label>
+            Current password
+            <input
+              type="password"
+              value={passwordForm.current_password}
+              onChange={(event) => setPasswordForm((current) => ({ ...current, current_password: event.target.value }))}
+              required
+            />
+          </label>
+          <label>
+            New password
+            <input
+              type="password"
+              minLength="8"
+              value={passwordForm.new_password}
+              onChange={(event) => setPasswordForm((current) => ({ ...current, new_password: event.target.value }))}
+              required
+            />
+          </label>
+          <button className="primary-button">Update password</button>
+        </form>
+
+        <form className="panel account-form danger-zone" onSubmit={deleteAccount}>
+          <div className="section-heading">
+            <span>03</span>
+            <h2>Delete account</h2>
+          </div>
+          <p className="muted">This removes your account, sessions, and saved-work records.</p>
+          <label>
+            Confirm password
+            <input
+              type="password"
+              value={deletePassword}
+              onChange={(event) => setDeletePassword(event.target.value)}
+              required
+            />
+          </label>
+          <button className="secondary-button">Delete account</button>
+        </form>
       </section>
     </section>
   );
